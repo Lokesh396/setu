@@ -293,8 +293,8 @@ Settlement is tracked separately via `settlement_status`. Invalid transitions ar
 ---
 
 ## Deployment
-
-https://setu-tti9.onrender.com/docs
+Github: https://github.com/Lokesh396/setu
+Render: https://setu-tti9.onrender.com/docs
 
 ---
 
