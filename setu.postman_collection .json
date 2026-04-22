@@ -1,0 +1,184 @@
+{
+  "info": {
+    "_postman_id": "49467616-a986-4f07-b009-822d1cc51094",
+    "name": "setu",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29041654"
+  },
+  "item": [
+    {
+      "name": "events",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event_id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"event_type\": \"payment_initiated\",\n  \"transaction_id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"merchant_id\": \"string\",\n  \"merchant_name\": \"string\",\n  \"amount\": 0,\n  \"currency\": \"INR\",\n  \"timestamp\": \"2026-04-22T10:23:11.068Z\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://setu-tti9.onrender.com/events",
+          "protocol": "https",
+          "host": [
+            "setu-tti9",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "events"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listTranscations",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://setu-tti9.onrender.com/transactions?page=1&page_size=20&sort_by=created_at&order=desc",
+          "protocol": "https",
+          "host": [
+            "setu-tti9",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "transactions"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "page_size",
+              "value": "20"
+            },
+            {
+              "key": "sort_by",
+              "value": "created_at"
+            },
+            {
+              "key": "order",
+              "value": "desc"
+            },
+            {
+              "key": "merchant_id",
+              "value": "",
+              "type": "text",
+              "id": 4,
+              "disabled": true
+            },
+            {
+              "key": "status",
+              "value": "",
+              "type": "text",
+              "id": 5,
+              "disabled": true
+            },
+            {
+              "key": "from_date",
+              "value": "",
+              "type": "text",
+              "id": 6,
+              "disabled": true
+            },
+            {
+              "key": "to_date",
+              "value": "",
+              "type": "text",
+              "id": 7,
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getBytranscationId",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://setu-tti9.onrender.com/transactions/ba9c226d-ce77-4954-96a0-be9f5b0f252d",
+          "protocol": "https",
+          "host": [
+            "setu-tti9",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "transactions",
+            "ba9c226d-ce77-4954-96a0-be9f5b0f252d"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "discrepancies",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://setu-tti9.onrender.com/reconciliation/discrepancies?page=1&page_size=20",
+          "protocol": "https",
+          "host": [
+            "setu-tti9",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "reconciliation",
+            "discrepancies"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "page_size",
+              "value": "20"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "discrepanicesSummary",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://setu-tti9.onrender.com/reconciliation/summary?group_by=merchant",
+          "protocol": "https",
+          "host": [
+            "setu-tti9",
+            "onrender",
+            "com"
+          ],
+          "path": [
+            "reconciliation",
+            "summary"
+          ],
+          "query": [
+            {
+              "key": "group_by",
+              "value": "merchant"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

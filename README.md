@@ -130,6 +130,7 @@ List transactions with optional filters, pagination, and sorting.
 {
   "total": 3800,
   "page": 1,
+  "has_next":true,
   "page_size": 20,
   "data": [...]
 }
@@ -222,6 +223,7 @@ Returns transactions where payment state and settlement state are inconsistent.
   "total": 42,
   "page": 1,
   "page_size": 20,
+  "has_next":true,
   "data": [
     {
       "transaction_id": "...",
@@ -293,11 +295,17 @@ Settlement is tracked separately via `settlement_status`. Invalid transitions ar
 ---
 
 ## Deployment
-Github: https://github.com/Lokesh396/setu
-Render: https://setu-tti9.onrender.com/docs
+
+Note: Render free tier spins down after inactivity. First request may take ~30 seconds to cold start.
+
+GitHub: https://github.com/Lokesh396/setu
+
+API: https://setu-tti9.onrender.com
+
+Docs: https://setu-tti9.onrender.com/docs
 
 ---
 
 ## AI Disclosure
 
-Claude (Anthropic) was used as a sounding board during development. The schema design, state machine logic, idempotency approach, and reconciliation query design were my own decisions — I used Claude to pressure-test those decisions, spot bugs, and discuss tradeoffs (e.g. whether to use one or two status columns, whether to keep a separate reconciliation table, offset vs keyset pagination). Boilerplate was accelerated with AI assistance. All code was written with full understanding of every line.
+Claude (Anthropic) was used as a sounding board during development. The schema design, state machine logic, idempotency approach, and reconciliation query design were my own decisions — I used Claude to pressure-test those decisions, spot bugs, and discuss tradeoffs (e.g. whether to use one or two status columns, whether to keep a separate reconciliation table, offset vs keyset pagination). Boilerplate was accelerated with AI assistance.
