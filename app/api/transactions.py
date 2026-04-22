@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
-from app.models.models import Transaction, Merchant, Event, PaymentStatus
+from app.models.models import Transaction, Merchant, Event, PaymentStatus, SettlementStatus
 
 router = APIRouter()
 
@@ -14,6 +14,7 @@ router = APIRouter()
 def list_transactions(
     merchant_id: Optional[str] = Query(None),
     status: Optional[PaymentStatus] = Query(None),
+    settlement_status: Optional[SettlementStatus] = Query(None),
     from_date: Optional[datetime] = Query(None),
     to_date: Optional[datetime] = Query(None),
     page: int = Query(1, ge=1),
@@ -28,6 +29,8 @@ def list_transactions(
         query = query.filter(Transaction.merchant_id == merchant_id)
     if status:
         query = query.filter(Transaction.status == status)
+    if settlement_status:
+        query = query.filter(Transaction.settlement_status == settlement_status)
     if from_date:
         query = query.filter(Transaction.created_at >= from_date)
     if to_date:

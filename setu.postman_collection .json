@@ -83,17 +83,24 @@
               "disabled": true
             },
             {
-              "key": "from_date",
+              "key": "settlement_status",
               "value": "",
               "type": "text",
               "id": 6,
               "disabled": true
             },
             {
-              "key": "to_date",
+              "key": "from_date",
               "value": "",
               "type": "text",
               "id": 7,
+              "disabled": true
+            },
+            {
+              "key": "to_date",
+              "value": "",
+              "type": "text",
+              "id": 8,
               "disabled": true
             }
           ]

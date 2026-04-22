@@ -111,7 +111,8 @@ List transactions with optional filters, pagination, and sorting.
 | Param | Type | Description |
 |---|---|---|
 | `merchant_id` | string | Filter by merchant |
-| `status` | string | Filter by payment status |
+| `status` | string | Filter by payment status (`payment_initiated`, `payment_processed`, `payment_failed`) |
+| `settlement_status` | string | Filter by settlement status (`pending`, `settled`) |
 | `from_date` | datetime | Filter by created_at >= |
 | `to_date` | datetime | Filter by created_at <= |
 | `page` | int | Page number (default: 1) |
