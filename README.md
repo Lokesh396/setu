@@ -21,8 +21,8 @@ app/
 └── config/
     └── settings.py          — loads DATABASE_URL from .env
 
-schemas/
-└── event.py                 — Pydantic request validation
+├── schemas/
+│   └── event.py             — Pydantic request validation
 ```
 
 **Stack:** FastAPI, PostgreSQL, SQLAlchemy ORM, Pydantic
@@ -285,6 +285,15 @@ Settlement is tracked separately via `settlement_status`. Invalid transitions ar
 **No service layer.** Business logic lives in route handlers. At this scale the indirection adds no value. A production system would extract event ingestion into a service class for independent testing and reuse.
 
 **Reconciliation is query-time.** Discrepancies are computed on read via SQL rather than precomputed and stored. Clean for this scale; a production system with millions of records would maintain a materialized view or a background reconciliation job.
+
+---
+
+## Production Improvements:
+- Handle out-of-order events via timestamp-based reconciliation
+- Introduce service layer for scalability
+- Use Kafka for event ingestion
+- Async DB access for high concurrency
+- Replace offset pagination with keyset pagination
 
 ---
 
