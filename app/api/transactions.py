@@ -12,15 +12,15 @@ router = APIRouter()
 
 @router.get("/transactions")
 def list_transactions(
-    merchant_id: Optional[str]          = Query(None),
-    status:      Optional[PaymentStatus] = Query(None),
-    from_date:   Optional[datetime]     = Query(None),
-    to_date:     Optional[datetime]     = Query(None),
-    page:        int                    = Query(1, ge=1),
-    page_size:   int                    = Query(20, ge=1, le=100),
-    sort_by:     str                    = Query("created_at"),
-    order:       str                    = Query("desc"),
-    db:          Session                = Depends(get_db),
+    merchant_id: Optional[str] = Query(None),
+    status: Optional[PaymentStatus] = Query(None),
+    from_date: Optional[datetime] = Query(None),
+    to_date: Optional[datetime] = Query(None),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+    sort_by: str = Query("created_at"),
+    order: str = Query("desc"),
+    db: Session = Depends(get_db),
 ):
     query = db.query(Transaction)
 
@@ -49,14 +49,14 @@ def list_transactions(
         "has_next": (page * page_size) < total,
         "data": [
             {
-                "transaction_id":    str(t.transaction_id),
-                "merchant_id":       t.merchant_id,
-                "amount":            float(t.amount),
-                "currency":          t.currency,
-                "status":            t.status.value,
+                "transaction_id": str(t.transaction_id),
+                "merchant_id": t.merchant_id,
+                "amount": float(t.amount),
+                "currency": t.currency,
+                "status": t.status.value,
                 "settlement_status": t.settlement_status.value,
-                "created_at":        t.created_at,
-                "updated_at":        t.updated_at,
+                "created_at": t.created_at,
+                "updated_at": t.updated_at,
             }
             for t in transactions
         ],
@@ -70,25 +70,25 @@ def get_transaction(transaction_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="transaction not found")
 
     merchant = db.get(Merchant, txn.merchant_id)
-    events   = db.query(Event).filter(Event.transaction_id == transaction_id).order_by(Event.timestamp.asc()).all()
+    events = db.query(Event).filter(Event.transaction_id == transaction_id).order_by(Event.timestamp.asc()).all()
 
     return {
-        "transaction_id":    str(txn.transaction_id),
-        "amount":            float(txn.amount),
-        "currency":          txn.currency,
-        "status":            txn.status.value,
+        "transaction_id": str(txn.transaction_id),
+        "amount": float(txn.amount),
+        "currency": txn.currency,
+        "status": txn.status.value,
         "settlement_status": txn.settlement_status.value,
-        "created_at":        txn.created_at,
-        "updated_at":        txn.updated_at,
+        "created_at": txn.created_at,
+        "updated_at": txn.updated_at,
         "merchant": {
-            "merchant_id":   merchant.merchant_id,
+            "merchant_id": merchant.merchant_id,
             "merchant_name": merchant.merchant_name,
         },
         "event_history": [
             {
-                "event_id":   str(e.event_id),
+                "event_id": str(e.event_id),
                 "event_type": e.event_type,
-                "timestamp":  e.timestamp,
+                "timestamp": e.timestamp,
             }
             for e in events
         ],

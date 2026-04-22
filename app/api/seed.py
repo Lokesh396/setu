@@ -12,7 +12,7 @@ router = APIRouter()
 VALID_TRANSITIONS = {
     PaymentStatus.payment_initiated: [PaymentStatus.payment_processed, PaymentStatus.payment_failed],
     PaymentStatus.payment_processed: [],
-    PaymentStatus.payment_failed:    [],
+    PaymentStatus.payment_failed: [],
 }
 
 

@@ -10,14 +10,14 @@ router = APIRouter()
 VALID_TRANSITIONS = {
     PaymentStatus.payment_initiated: [PaymentStatus.payment_processed, PaymentStatus.payment_failed],
     PaymentStatus.payment_processed: [],
-    PaymentStatus.payment_failed:    [],
+    PaymentStatus.payment_failed: [],
 }
 
 
 @router.post("/events", status_code=201)
 def ingest_event(payload: EventIn, db: Session = Depends(get_db)):
 
-    # idempotency check — same event_id, skip silently
+    # idempotency check - skip if already processed
     existing_event = db.get(Event, payload.event_id)
     if existing_event:
         return {"message": "duplicate event, skipped"}
@@ -50,16 +50,16 @@ def ingest_event(payload: EventIn, db: Session = Depends(get_db)):
             txn.updated_at = payload.timestamp
 
     else:
-        # payment_processed or payment_failed — validate state machine
+        # payment_processed or payment_failed - validate state machine
         txn = db.get(Transaction, payload.transaction_id)
         if txn:
             new_status = PaymentStatus(payload.event_type)
             if new_status in VALID_TRANSITIONS.get(txn.status, []):
                 txn.status = new_status
                 txn.updated_at = payload.timestamp
-            # invalid transition — event stored but status not updated (discrepancy)
+            # invalid transition - event stored but state not updated
 
-    # store event after transaction exists — FK constraint satisfied
+    # store event after transaction exists to satisfy FK constraint
     event = Event(
         event_id=payload.event_id,
         transaction_id=payload.transaction_id,

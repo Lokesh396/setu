@@ -60,20 +60,14 @@ cp .env.example .env
 
 # start the server
 uvicorn app.main:app --reload
-```
 
-Tables are created automatically on startup via `Base.metadata.create_all`.
-
-### Seed Data
-
-Hit `POST /seed` to load all 10,355 sample events:
-This endpoint is exposed for reviewer convenience.
-
-```bash
+# seed the sample data
 curl -X POST http://localhost:8000/seed
 ```
 
-Safe to call multiple times — duplicate events are skipped idempotently.
+Tables are created automatically on startup via `Base.metadata.create_all`. The seed endpoint loads all 10,355 sample events and is safe to call multiple times — duplicate events are skipped idempotently.
+
+> Note: In production this would be a CLI management command, not an exposed HTTP endpoint.
 
 ---
 
