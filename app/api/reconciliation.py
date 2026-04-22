@@ -100,5 +100,6 @@ def reconciliation_discrepancies(
         "total":     total,
         "page":      page,
         "page_size": page_size,
+        "has_next": (page * page_size) < total,
         "data":      [dict(row._mapping) for row in rows],
     }

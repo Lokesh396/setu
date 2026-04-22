@@ -46,6 +46,7 @@ def list_transactions(
         "total": total,
         "page": page,
         "page_size": page_size,
+        "has_next": (page * page_size) < total,
         "data": [
             {
                 "transaction_id":    str(t.transaction_id),

@@ -67,6 +67,7 @@ Tables are created automatically on startup via `Base.metadata.create_all`.
 ### Seed Data
 
 Hit `POST /seed` to load all 10,355 sample events:
+This endpoint is exposed for reviewer convenience.
 
 ```bash
 curl -X POST http://localhost:8000/seed
@@ -211,6 +212,7 @@ Returns transactions where payment state and settlement state are inconsistent.
 **Discrepancy cases:**
 - `payment_processed` but `settlement_status = pending` — processed but never settled
 - `payment_failed` but `settlement_status = settled` — settled after a failure
+- Duplicate events (same event_id) are dropped before reaching the state machine, so they never cause conflicting transitions. The 190 duplicates in the sample data are all silently skipped at ingestion.
 
 **Query params:** `page`, `page_size`
 
@@ -277,6 +279,10 @@ Settlement is tracked separately via `settlement_status`. Invalid transitions ar
 ## Assumptions & Tradeoffs
 
 **Events arrive in order.** Verified against the sample data — all 3,800 transactions follow the correct lifecycle sequence. Out-of-order delivery (e.g. `payment_processed` before `payment_initiated`) returns a 400. A production system would use a message queue with ordering guarantees.
+
+**Duplicate events are truly identical**. The system assumes a duplicate `event_id` always carries the same `event_type` and `transaction_id` as the original. A duplicate with the same `event_id` but a different `event_type` would be silently skipped rather than flagged — this case is not handled. The sample data confirms all 190 duplicates are exact copies.
+
+**One event per type per transaction**. The system assumes each event type appears at most once per transaction. If two distinct `payment_initiated` events arrive for the same transaction (different `event_id`, same `event_type`), the second is stored in event history but does not update transaction state — it will not be flagged as a discrepancy. The sample data confirms this does not occur.
 
 **Offset-based pagination.** Used for simplicity. Deep pagination degrades on large datasets because PostgreSQL scans skipped rows. Keyset (cursor-based) pagination would be the production choice.
 
