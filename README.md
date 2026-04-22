@@ -41,7 +41,7 @@ Business logic lives in route handlers directly. A service layer would add indir
 
 ```bash
 # clone the repo
-git clone <repo-url>
+git clone https://github.com/Lokesh396/setu.git
 cd setu
 
 # create virtual environment
@@ -294,4 +294,4 @@ _TODO: add deployment URL and platform details_
 
 ## AI Disclosure
 
-Claude (Anthropic) was used as a sounding board during development. The schema design, state machine logic, idempotency approach, and reconciliation query design were my own decisions — I used Claude to pressure-test those decisions, spot bugs, and discuss tradeoffs (e.g. whether to use one or two status columns, whether to keep a separate reconciliation table, offset vs keyset pagination). Boilerplate was accelerated with AI assistance. All code was written with full understanding of every line.# setu
+Claude (Anthropic) was used as a sounding board during development. The schema design, state machine logic, idempotency approach, and reconciliation query design were my own decisions — I used Claude to pressure-test those decisions, spot bugs, and discuss tradeoffs (e.g. whether to use one or two status columns, whether to keep a separate reconciliation table, offset vs keyset pagination). Boilerplate was accelerated with AI assistance. All code was written with full understanding of every line.
