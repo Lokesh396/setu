@@ -288,7 +288,7 @@ Settlement is tracked separately via `settlement_status`. Invalid transitions ar
 
 ## Deployment
 
-_TODO: add deployment URL and platform details_
+https://setu-tti9.onrender.com/docs
 
 ---
 
