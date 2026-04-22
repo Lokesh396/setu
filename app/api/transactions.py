@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -31,6 +31,9 @@ def list_transactions(
     if from_date:
         query = query.filter(Transaction.created_at >= from_date)
     if to_date:
+        # extend to end of day so same-day from/to range works correctly
+        if to_date.hour == 0 and to_date.minute == 0 and to_date.second == 0:
+            to_date = to_date + timedelta(days=1) - timedelta(seconds=1)
         query = query.filter(Transaction.created_at <= to_date)
 
     sort_column = getattr(Transaction, sort_by, Transaction.created_at)
