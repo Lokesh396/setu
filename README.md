@@ -308,6 +308,8 @@ API: https://setu-tti9.onrender.com
 
 Docs: https://setu-tti9.onrender.com/docs
 
+videolink: https://www.tella.tv/video/implementing-idempotency-in-payment-apis-1650
+
 ---
 
 ## AI Disclosure
